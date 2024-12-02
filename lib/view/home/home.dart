@@ -1,0 +1,148 @@
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:teamhup/componant/buttonapp.dart';
+import 'package:teamhup/componant/colorsapp.dart';
+import 'package:teamhup/componant/showModalBottomSheet.dart';
+import 'package:teamhup/provider/prov.dart';
+import 'package:teamhup/view/home/componanthome.dart';
+import 'package:provider/provider.dart';
+
+class Home extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _Home();
+  }
+}
+
+class _Home extends State<Home> {
+  ColorsApp colorsApp = new ColorsApp();
+  ShowModalBottomSheet showBottomSheet = new ShowModalBottomSheet();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<Control>(builder: (context, val, child) {
+      return Container(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      child: Image.asset("assets/images/background.png"),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 30),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage("assets/images/profile.jpg"),
+                          radius: 23,
+                        ),
+                        subtitle: Text(
+                          "Mike Cooper",
+                          style: TextStyle(color: colorsApp.colorwhiteapp,fontWeight: FontWeight.bold),
+                        ),
+                        title: Text("Marketing Officer,",style: TextStyle(color: colorsApp.colorwhiteapp,fontWeight: FontWeight.w100),),
+                        trailing: CircleAvatar(
+                          backgroundColor: colorsApp.colorwhiteapp,
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed("notification");
+                              },
+                              icon: Icon(Icons.notifications_outlined)),
+                        ),
+                      ),
+                    ),
+
+                    ///
+                    Appointments(),
+                  ],
+                ),
+
+                //feature home 
+                Container(
+                  width: double.infinity,
+                  height: 250,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4, // عدد الأعمدة في الشبكة
+                        crossAxisSpacing: 2, // المسافة بين الأعمدة
+                        mainAxisSpacing: 2, // المسافة بين الصفوف
+                        childAspectRatio: 0.8, // نسبة العرض إلى الارتفاع
+                      ),
+                      itemCount: val.homeButton1.length, // عدد العناصر في الشبكة
+                      itemBuilder: (context, i) {
+                        return ButtonHome(
+                            title: val.homeButton1[i]['title'],
+                            image: val.homeButton1[i]['image'],
+                            color: colorsApp.colorwhiteapp,
+                            colorfont: colorsApp.colorblackapp,
+                            func: () {
+                              if (val.homeButton1[i]['title'] == "Payroll") {
+                                Navigator.of(context).pushNamed("payroll");
+                              }else if (val.homeButton1[i]['title'] == "Payslip") {
+                                Navigator.of(context).pushNamed("payslip");
+                              }else if (val.homeButton1[i]['title'] == "Counseling") {
+                                Navigator.of(context).pushNamed("counseling");
+                              }else if (val.homeButton1[i]['title'] == "Time Off") {
+                                Navigator.of(context).pushNamed("timeoff");
+                              }else if (val.homeButton1[i]['title'] == "Calendar") {
+                                Navigator.of(context).pushNamed("calendar");
+                              }else if (val.homeButton1[i]['title'] == "Holiday") {
+                                Navigator.of(context).pushNamed("holiday");
+                              }else if (val.homeButton1[i]['title'] == "Resign") {
+                                Navigator.of(context).pushNamed("resign");
+                              }
+                              //دا تصميم قديم لعرض باقي المميزات 
+                              // if (val.homeButton1[i]['title'] == "Other") {
+                              //   showBottomSheet.bottomSheetHome(context);
+                              // }
+                            });
+                      }),
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  margin: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: colorsApp.colorwhiteapp,
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Image.asset("assets/images/map.png"),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+                            Text(
+                              "Main branch Nasr",
+                              style: TextStyle(
+                                color: colorsApp.colorgreyapp,
+                              ),
+                            ),
+                            Expanded(child: Container()),
+                            Text(
+                              "Out of range",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+    });
+  }
+}
