@@ -152,6 +152,20 @@ class _Login extends State<Login> {
                           ),
                         ],
                       ),
+
+                      Container(
+                          margin: EdgeInsets.symmetric(vertical: 20),
+                          child: Text("Enter With Face Id ")),
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed("faceid");
+                        },
+                        child: Container(
+                          height: 70,
+                          width: 70,
+                          child: Image.asset("assets/images/face.png"),
+                        ),
+                      ),
                     ],
                   ),
                 ),

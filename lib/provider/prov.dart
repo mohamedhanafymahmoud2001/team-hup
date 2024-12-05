@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:teamhup/componant/showModalBottomSheet.dart';
 import 'package:teamhup/provider/api.dart';
 
 class Control extends ChangeNotifier {
@@ -50,7 +51,6 @@ class Control extends ChangeNotifier {
         activeIndex == 3 ? Icons.person : Icons.person_outline,
       ];
 
-  
   changeScreenByNavBar(int valu) {
     activeIndex = valu;
     notifyListeners();
@@ -68,12 +68,13 @@ class Control extends ChangeNotifier {
     date = date;
     notifyListeners();
   }
-  
+
   bool showvote = false;
   showVote(bool value) {
     showvote = value;
     notifyListeners();
   }
+
   String selectedValue = "Select";
   List<dynamic> dropdownItems = [
     'Select holiday tybe1',
@@ -83,14 +84,30 @@ class Control extends ChangeNotifier {
     'Select holiday tybe5',
     'Select holiday tybe6'
   ];
-  
-  String holiday="unpaid";
-  changeHoliday(int value){ 
-    if(value==0){
-      holiday='paid';
-    }else{
-      holiday='unpaid';
+
+  String holiday = "unpaid";
+  changeHoliday(int value) {
+    if (value == 0) {
+      holiday = 'paid';
+    } else {
+      holiday = 'unpaid';
     }
     notifyListeners();
+  }
+
+  bool showFirstImage = true;
+  double progress = 0.0;
+  ShowModalBottomSheet showBottomSheet = new ShowModalBottomSheet();
+  animatFaceId(BuildContext context) async {
+    progress = 1.0;
+    notifyListeners();
+    await Future.delayed(Duration(seconds: 3));
+    showFirstImage = !showFirstImage;
+    notifyListeners();
+    await Future.delayed(Duration(seconds: 1));
+    showBottomSheet.bottomSheetCheckIn(context);
+    notifyListeners();
+    progress = 0.0;
+    showFirstImage = !showFirstImage;
   }
 }
