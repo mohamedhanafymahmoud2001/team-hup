@@ -66,7 +66,10 @@ class ButtonHome extends StatelessWidget {
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20), color: color),
-              child: Image.asset("$image"),
+              child: Image.asset(
+                "$image",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Text(
@@ -113,12 +116,11 @@ class ButtonCalender extends StatelessWidget {
             borderRadius: BorderRadius.circular(50),
             border: Border.all(width: 1)),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center, 
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: icon),
+                margin: EdgeInsets.symmetric(horizontal: 10), child: icon),
             Text(
               "$title",
               style: TextStyle(color: colorfont, fontWeight: FontWeight.bold),
@@ -129,4 +131,3 @@ class ButtonCalender extends StatelessWidget {
     );
   }
 }
-

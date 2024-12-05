@@ -24,7 +24,10 @@ class _Login extends State<Login> {
             children: [
               Container(
                 width: double.infinity,
-                child: Image.asset("assets/images/background.png"),
+                child: Image.asset(
+                  "assets/images/background.png",
+                  fit: BoxFit.cover,
+                ),
               ),
               Container(
                 width: double.infinity,
@@ -120,9 +123,12 @@ class _Login extends State<Login> {
                           colorfont: colorsApp.colorwhiteapp,
                           width: double.infinity,
                           height: 54,
-                          func: () {Navigator.of(context).pushReplacementNamed("mainapp");}),
+                          func: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed("mainapp");
+                          }),
                       // Expanded(child: Container()),
-                      
+
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

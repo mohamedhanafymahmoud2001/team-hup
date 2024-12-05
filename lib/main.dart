@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
             'hrlatter': (context) => HrLatter(),
             'faceid': (context) => FaceId(),
           },
-          home: CheckFace() //  Board(),
+          home: FaceId() //  Board(),
           ),
     );
   }

@@ -24,7 +24,10 @@ class _SetNewPass extends State<SetNewPass> {
             children: [
               Container(
                 width: double.infinity,
-                child: Image.asset("assets/images/background.png"),
+                child: Image.asset(
+                  "assets/images/background.png",
+                  fit: BoxFit.cover,
+                ),
               ),
               Container(
                 width: double.infinity,
@@ -118,11 +121,14 @@ class _SetNewPass extends State<SetNewPass> {
                           colorfont: colorsApp.colorwhiteapp,
                           width: double.infinity,
                           height: 54,
-                          func: () {Navigator.of(context).pushNamedAndRemoveUntil(
-                            "login", // اسم الشاشة التي تريد الانتقال إليها
-                            (Route<dynamic> route) => false, // تعني إزالة كل الشاشات السابقة
-                          );}),
-                        ],
+                          func: () {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                              "login", // اسم الشاشة التي تريد الانتقال إليها
+                              (Route<dynamic> route) =>
+                                  false, // تعني إزالة كل الشاشات السابقة
+                            );
+                          }),
+                    ],
                   ),
                 ),
               )
