@@ -128,9 +128,59 @@ class _Home extends State<Home> {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Image.asset("assets/images/map.png"),
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: Image.asset(
+                            "assets/images/map.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        MaterialButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed("checkinout");
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                            width: double.infinity,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(
+                                        0.5), // Shadow color with opacity
+                                    spreadRadius: 5, // Spread radius
+                                    blurRadius: 7, // Blur radius
+                                    offset: Offset(0,
+                                        3), // Changes position of shadow (x, y)
+                                  ),
+                                ],
+                                color: colorsApp.colorblackapp,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  size: 27,
+                                  Icons.fingerprint,
+                                  color: colorsApp.colorwhiteapp,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "Enter",
+                                  style:
+                                      TextStyle(color: colorsApp.colorwhiteapp),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     Container(
                       child: Row(
