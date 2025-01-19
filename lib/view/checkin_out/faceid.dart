@@ -1,9 +1,10 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:teamhup/componant/colorsapp.dart';
 import 'package:teamhup/componant/showModalBottomSheet.dart';
 import 'package:teamhup/provider/prov.dart';
+
+import 'package:local_auth/local_auth.dart';
 
 class FaceId extends StatefulWidget {
   @override
@@ -13,6 +14,47 @@ class FaceId extends StatefulWidget {
 class _FaceIdState extends State<FaceId> {
   ColorsApp colorsApp = new ColorsApp();
   ShowModalBottomSheet showBottomSheet = new ShowModalBottomSheet();
+
+  final LocalAuthentication auth = LocalAuthentication();
+
+  // تنفيذ المصادقة الحيوية باستخدام البصمة أو الوجه
+  Future<void> _authenticate() async {
+    bool isAuthenticated = false;
+    try {
+      // التحقق من الأنواع المتاحة من المصادقة الحيوية
+      List<BiometricType> availableBiometrics =
+          await auth.getAvailableBiometrics();
+
+      // إذا كانت البصمة أو الوجه متاحة، حاول المصادقة
+      if (availableBiometrics.isNotEmpty) {
+        isAuthenticated = await auth.authenticate(
+          localizedReason: 'Please authenticate to access the app',
+          // الرسالة للمستخدم
+          options: AuthenticationOptions(
+            biometricOnly: true, // تأكيد استخدام المصادقة الحيوية فقط
+          ),
+        );
+      } else {
+        // إذا لم تتوفر المصادقة الحيوية، أظهر رسالة
+        _showMessage("No biometric authentication available.");
+        return;
+      }
+    } catch (e) {
+      print("Error during authentication: $e");
+    }
+
+    if (isAuthenticated) {
+      _showMessage("Authentication successful!");
+    } else {
+      _showMessage("Authentication failed.");
+    }
+  }
+
+  // عرض رسالة
+  void _showMessage(String message) {
+    showBottomSheet.bottomSheetCheckIn(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Control>(builder: (context, val, child) {
@@ -55,8 +97,10 @@ class _FaceIdState extends State<FaceId> {
                   width: 110, // زيادة الحجم
                   height: 110, // زيادة الحجم
                   child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0.0, end: val.progress), // الحركة من 0 إلى 100%
-                    duration: Duration(seconds: 3), // مدة الأنيميشن
+                    tween: Tween(begin: 0.0, end: val.progress),
+                    // الحركة من 0 إلى 100%
+                    duration: Duration(seconds: 3),
+                    // مدة الأنيميشن
                     builder: (context, value, child) {
                       return CircularProgressIndicator(
                         strokeWidth: 6, // سماكة الخط
@@ -97,11 +141,7 @@ class _FaceIdState extends State<FaceId> {
                 height: 20,
               ),
               MaterialButton(
-                onPressed: () {
-                  val.animatFaceId(context);
-                  print("mohamed");
-                  //showBottomSheet.bottomSheetCheckIn(context);
-                },
+                onPressed: _authenticate,
                 child: Container(
                   height: 100,
                   width: 100,
